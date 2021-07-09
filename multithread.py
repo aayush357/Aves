@@ -9,11 +9,11 @@ from BirdDetailsGuiLoad import BirdDetailsGuiLoader
 from list_making import *
 from random import sample
 from explore_win import *
+global_State=0
 
 
 class Worker1(QObject):
-    finished=pyqtSignal(dict)
-
+    finished=pyqtSignal(dict, dict)
     @pyqtSlot(str)
     def run(self, name):
         img_dict={}
@@ -27,15 +27,15 @@ class Worker1(QObject):
         pixmapImage = QPixmap()
         pixmapImage.loadFromData(img)
         aspectRatio = pixmapImage.width() / pixmapImage.height()
-        height = min(pixmapImage.height(), 170)
+        height = min(pixmapImage.height(), 163)
         width = round(height * aspectRatio)
         pixmapImage = pixmapImage.scaled(height, width, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
         img_dict[0] = pixmapImage
         print('generating images')
-        self.finished.emit(img_dict)
+        self.finished.emit(img_dict, data)
 
 class Worker2(QObject):
-    finished=pyqtSignal(dict)
+    finished=pyqtSignal(dict, dict)
 
     @pyqtSlot(str)
     def run(self, name):
@@ -50,14 +50,14 @@ class Worker2(QObject):
         pixmapImage = QPixmap()
         pixmapImage.loadFromData(img)
         aspectRatio = pixmapImage.width() / pixmapImage.height()
-        height = min(pixmapImage.height(), 170)
+        height = min(pixmapImage.height(), 163)
         width = round(height * aspectRatio)
         pixmapImage = pixmapImage.scaled(height, width, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
         img_dict[0] = pixmapImage
-        self.finished.emit(img_dict)
+        self.finished.emit(img_dict, data)
 
 class Worker3(QObject):
-    finished=pyqtSignal(dict)
+    finished=pyqtSignal(dict, dict)
 
     @pyqtSlot(str)
     def run(self, name):
@@ -72,15 +72,15 @@ class Worker3(QObject):
         pixmapImage = QPixmap()
         pixmapImage.loadFromData(img)
         aspectRatio = pixmapImage.width() / pixmapImage.height()
-        height = min(pixmapImage.height(), 170)
+        height = min(pixmapImage.height(), 163)
         width = round(height * aspectRatio)
         pixmapImage = pixmapImage.scaled(height, width, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
         img_dict[0] = pixmapImage
 
-        self.finished.emit(img_dict)
+        self.finished.emit(img_dict, data)
 
 class Worker4(QObject):
-    finished=pyqtSignal(dict)
+    finished=pyqtSignal(dict, dict)
 
     @pyqtSlot(str)
     def run(self, name):
@@ -95,15 +95,15 @@ class Worker4(QObject):
         pixmapImage = QPixmap()
         pixmapImage.loadFromData(img)
         aspectRatio = pixmapImage.width() / pixmapImage.height()
-        height = min(pixmapImage.height(), 170)
+        height = min(pixmapImage.height(), 163)
         width = round(height * aspectRatio)
         pixmapImage = pixmapImage.scaled(height, width, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
         img_dict[0] = pixmapImage
 
-        self.finished.emit(img_dict)
+        self.finished.emit(img_dict, data)
 
 class Worker5(QObject):
-    finished=pyqtSignal(dict)
+    finished=pyqtSignal(dict, dict)
 
     @pyqtSlot(str)
     def run(self, name):
@@ -118,15 +118,15 @@ class Worker5(QObject):
         pixmapImage = QPixmap()
         pixmapImage.loadFromData(img)
         aspectRatio = pixmapImage.width() / pixmapImage.height()
-        height = min(pixmapImage.height(), 170)
+        height = min(pixmapImage.height(), 163)
         width = round(height * aspectRatio)
         pixmapImage = pixmapImage.scaled(height, width, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
         img_dict[0] = pixmapImage
 
-        self.finished.emit(img_dict)
+        self.finished.emit(img_dict, data)
 
 class Worker6(QObject):
-    finished=pyqtSignal(dict)
+    finished=pyqtSignal(dict, dict)
 
     @pyqtSlot(str)
     def run(self, name):
@@ -141,12 +141,12 @@ class Worker6(QObject):
         pixmapImage = QPixmap()
         pixmapImage.loadFromData(img)
         aspectRatio = pixmapImage.width() / pixmapImage.height()
-        height = min(pixmapImage.height(), 170)
+        height = min(pixmapImage.height(), 163)
         width = round(height * aspectRatio)
         pixmapImage = pixmapImage.scaled(height, width, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
         img_dict[0] = pixmapImage
 
-        self.finished.emit(img_dict)
+        self.finished.emit(img_dict, data)
 
 
 class MainScreen(QMainWindow):
@@ -168,6 +168,7 @@ class MainScreen(QMainWindow):
         self.minimizeButton.clicked.connect(lambda: self.showMinimized())
         self.titleBarFrame.mouseMoveEvent = self.moveWindow
         # self.maximizeButton.clicked.connect(lambda: self.showMaximized())
+        self.Expl = Explore()
         self.SelectImageButton.clicked.connect(self.selectImage)
         self.explore_btn.clicked.connect(self.explore)
 
@@ -228,14 +229,30 @@ class MainScreen(QMainWindow):
         self.fname = ""
         self.bname = ""
         self.MoreInfoButton.clicked.connect(self.showDetails)
+        self.maximizeButton.clicked.connect(lambda: self.maximize_restore())
         pixmapImage = QPixmap("Resource/image.png")
         aspectRatio = pixmapImage.width() / pixmapImage.height()
-        height = min(pixmapImage.height(), 200)
+        height = min(pixmapImage.height(), 250)
         width = height * aspectRatio
-        self.BirdImage.setPixmap(pixmapImage.scaled(height, width, QtCore.Qt.KeepAspectRatio))
-        self.BirdNameValue.setText("<small>Select Image First</small>")
-        self.Expl = Explore()
+        self.appIcon.setPixmap(pixmapImage.scaled(height, width, QtCore.Qt.KeepAspectRatio))
+        # self.BirdNameValue.setText("<small>Select Image First</small>")
+
         self.ResultFrame.hide()
+
+    def maximize_restore(self):
+        global global_State
+        status=global_State
+
+        if status==0:
+            self.showMaximized()
+            global_State=1
+            self.maximizeButton.setToolTip('Restore')
+
+        else:
+            global_State=0
+            self.showNormal()
+            self.resize(self.width()+1, self.height()+1)
+            self.maximizeButton.setToolTip('Maximize')
 
 
     def loadImage(self, fname):
@@ -259,6 +276,13 @@ class MainScreen(QMainWindow):
         return str(resJson['birdName'])
 
     def run_long_task(self):
+        self.Expl.name1.setEnabled(False)
+        self.Expl.name2.setEnabled(False)
+        self.Expl.name3.setEnabled(False)
+        self.Expl.name4.setEnabled(False)
+        self.Expl.name5.setEnabled(False)
+        self.Expl.name6.setEnabled(False)
+
         self.img_request1.emit(self.names[0])
         self.img_request2.emit(self.names[1])
         self.img_request3.emit(self.names[2])
@@ -266,35 +290,41 @@ class MainScreen(QMainWindow):
         self.img_request5.emit(self.names[4])
         self.img_request6.emit(self.names[5])
 
-    def img1_Set( self, img1):
+    def img1_Set( self, img1, api_data):
         self.Expl.image1.setPixmap(img1[0])
         self.Expl.lname1.setText(self.names_without[0])
-        self.Expl.name1.clicked.connect(lambda :self.load_details_exp(self.names[0]))
+        self.Expl.name1.setEnabled(True)
+        self.Expl.name1.clicked.connect(lambda :self.load_details_exp(api_data))
 
-    def img2_Set(self, img2):
+    def img2_Set(self, img2, api_data):
         self.Expl.image2.setPixmap(img2[0])
         self.Expl.lname2.setText(self.names_without[1])
-        self.Expl.name2.clicked.connect(lambda: self.load_details_exp(self.names[1]))
+        self.Expl.name2.setEnabled(True)
+        self.Expl.name2.clicked.connect(lambda: self.load_details_exp(api_data))
 
-    def img3_Set(self, img3):
+    def img3_Set(self, img3, api_Data):
         self.Expl.image3.setPixmap(img3[0])
         self.Expl.lname3.setText(self.names_without[2])
-        self.Expl.name3.clicked.connect(lambda: self.load_details_exp(self.names[2]))
+        self.Expl.name3.setEnabled(True)
+        self.Expl.name3.clicked.connect(lambda: self.load_details_exp(api_Data))
 
-    def img4_Set(self, img4):
+    def img4_Set(self, img4, api_data):
         self.Expl.image4.setPixmap(img4[0])
         self.Expl.lname4.setText(self.names_without[3])
-        self.Expl.name4.clicked.connect(lambda: self.load_details_exp(self.names[3]))
+        self.Expl.name4.setEnabled(True)
+        self.Expl.name4.clicked.connect(lambda: self.load_details_exp(api_data))
 
-    def img5_Set(self, img5):
+    def img5_Set(self, img5, api_data):
         self.Expl.image5.setPixmap(img5[0])
         self.Expl.lname5.setText(self.names_without[4])
-        self.Expl.name5.clicked.connect(lambda: self.load_details_exp(self.names[4]))
+        self.Expl.name5.setEnabled(True)
+        self.Expl.name5.clicked.connect(lambda: self.load_details_exp(api_data))
 
-    def img6_Set(self, img6):
+    def img6_Set(self, img6, api_data):
         self.Expl.image6.setPixmap(img6[0])
         self.Expl.lname6.setText(self.names_without[5])
-        self.Expl.name6.clicked.connect(lambda: self.load_details_exp(self.names[5]))
+        self.Expl.name6.setEnabled(True)
+        self.Expl.name6.clicked.connect(lambda: self.load_details_exp(api_data))
 
     def selectImage(self):
         self.SelectImageButton.setText("Loading")
@@ -327,12 +357,9 @@ class MainScreen(QMainWindow):
         data = json.loads(response.text)
         self.birdDetailsGuiLoader = BirdDetailsGuiLoader(data)
 
-    def load_details_exp(self,b_name):
-        apiurl='https://aves-detail.herokuapp.com/getDetails/'
-        print(b_name)
-        response=requests.get(apiurl+b_name)
-        data=json.loads(response.text)
-        self.det=BirdDetailsGuiLoader(data)
+    def load_details_exp(self,apiData):
+        print(apiData['birdName'])
+        self.det=BirdDetailsGuiLoader(apiData)
         self.det.show()
 
     def showDetails(self):
@@ -340,6 +367,9 @@ class MainScreen(QMainWindow):
             self.birdDetailsGuiLoader.show()
 
     def moveWindow(self, event):
+        if self.return_status():
+            self.maximize_restore()
+
         # IF LEFT CLICK MOVE WINDOW
         if event.buttons() == Qt.LeftButton:
             self.move(self.pos() + event.globalPos() - self.dragPos)
@@ -348,6 +378,9 @@ class MainScreen(QMainWindow):
 
     def mousePressEvent(self, event):
         self.dragPos = event.globalPos()
+
+    def return_status(self):
+        return global_State
 
 
 def main():
