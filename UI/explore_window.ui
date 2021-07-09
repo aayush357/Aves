@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1103</width>
-    <height>900</height>
+    <height>906</height>
    </rect>
   </property>
   <property name="minimumSize">
@@ -18,7 +18,7 @@
   </property>
   <property name="maximumSize">
    <size>
-    <width>16777215</width>
+    <width>1103</width>
     <height>987</height>
    </size>
   </property>
@@ -104,6 +104,12 @@ color: white;</string>
         <height>30</height>
        </size>
       </property>
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>30</height>
+       </size>
+      </property>
       <property name="layoutDirection">
        <enum>Qt::LeftToRight</enum>
       </property>
@@ -137,7 +143,7 @@ color: rgb(97, 97, 97);</string>
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>176</height>
+        <height>163</height>
        </size>
       </property>
       <property name="font">
@@ -198,7 +204,7 @@ color: white;</string>
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>176</height>
+        <height>163</height>
        </size>
       </property>
       <property name="font">
@@ -559,7 +565,7 @@ background-color:grey;
       <property name="minimumSize">
        <size>
         <width>0</width>
-        <height>176</height>
+        <height>163</height>
        </size>
       </property>
       <property name="font">
@@ -594,6 +600,12 @@ color: white;</string>
     </item>
     <item row="1" column="0" colspan="3">
      <widget class="QWidget" name="titleBarFrame" native="true">
+      <property name="maximumSize">
+       <size>
+        <width>16777215</width>
+        <height>38</height>
+       </size>
+      </property>
       <property name="styleSheet">
        <string notr="true">background-color: rgb(41, 44, 68);
 </string>
