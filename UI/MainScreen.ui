@@ -7,11 +7,15 @@
     <x>0</x>
     <y>0</y>
     <width>820</width>
-    <height>657</height>
+    <height>737</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
+  </property>
+  <property name="windowIcon">
+   <iconset>
+    <normaloff>C:/Users/91926/Desktop/Aves/Resource/image.png</normaloff>C:/Users/91926/Desktop/Aves/Resource/image.png</iconset>
   </property>
   <property name="styleSheet">
    <string notr="true">QMainWindow{
@@ -284,7 +288,7 @@ QPushButton:hover
         </layout>
        </item>
        <item>
-        <layout class="QVBoxLayout" name="HeadAppNameContainer">
+        <layout class="QHBoxLayout" name="horizontalLayout_2">
          <item>
           <widget class="QLabel" name="HeadAppName">
            <property name="font">
@@ -302,6 +306,19 @@ color:white;</string>
            </property>
            <property name="textFormat">
             <enum>Qt::RichText</enum>
+           </property>
+           <property name="alignment">
+            <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+           </property>
+           <property name="indent">
+            <number>150</number>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QLabel" name="appIcon">
+           <property name="text">
+            <string/>
            </property>
            <property name="alignment">
             <set>Qt::AlignCenter</set>
@@ -540,8 +557,20 @@ color:white;</string>
                  <property name="rightMargin">
                   <number>50</number>
                  </property>
-                 <item>
+                 <item alignment="Qt::AlignHCenter">
                   <widget class="QPushButton" name="MoreInfoButton">
+                   <property name="minimumSize">
+                    <size>
+                     <width>295</width>
+                     <height>0</height>
+                    </size>
+                   </property>
+                   <property name="maximumSize">
+                    <size>
+                     <width>295</width>
+                     <height>16777215</height>
+                    </size>
+                   </property>
                    <property name="font">
                     <font>
                      <pointsize>10</pointsize>
