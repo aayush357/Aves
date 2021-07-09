@@ -13,6 +13,7 @@ class SplashScreen(QMainWindow):
         super().__init__()
         loadUi('UI/LoadingScreen.ui', self)
         self.ProgressBar.setValue(0)
+        
         ## REMOVE TITLE BAR
         self.setWindowFlag(QtCore.Qt.FramelessWindowHint)
         self.setAttribute(QtCore.Qt.WA_TranslucentBackground)
@@ -40,21 +41,34 @@ class SplashScreen(QMainWindow):
             time.sleep(0.01)
             # setting value to progress bar
             self.ProgressBar.setValue(i)
-        res = requests.get(
-            'https://bird-species-class-prediction.herokuapp.com/test')
-        print(res.text)
-        self.Loadinglabel.setText("<strong>Loading</strong> Bird Details api")
-        for i in range(51, 101):
-            # slowing down the loop
-            time.sleep(0.01)
-            # setting value to progress bar
-            self.ProgressBar.setValue(i)
-        res = requests.get('https://aves-detail.herokuapp.com/test')
-        print(res.text)
-        self.timer.stop()
-        self.main = MainScreen()
-        self.main.show()
-        self.close()
+        try:
+            res = requests.get('https://bird-species-class-prediction.herokuapp.com/test')
+            print(res.text)
+
+            self.Loadinglabel.setText("<strong>Loading</strong> Bird Details api")
+            for i in range(51, 101):
+                # slowing down the loop
+                time.sleep(0.01)
+                # setting value to progress bar
+                self.ProgressBar.setValue(i)
+
+            res = requests.get('https://aves-detail.herokuapp.com/test')
+            print(res.text)
+
+            self.timer.stop()
+            self.main = MainScreen()
+            self.main.show()
+            self.close()
+
+        except:
+            self.msg = QMessageBox()
+            self.msg.setIcon(QMessageBox.Critical)
+            self.msg.setStandardButtons(QMessageBox.Close)
+            self.msg.setWindowTitle("Error")
+            self.msg.setText("No Internet Connection!!\nPlease Connect to Internet")
+            self.msg.exec_()
+            self.close()
+
 
 
 def main():
