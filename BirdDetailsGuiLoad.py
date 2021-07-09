@@ -83,7 +83,6 @@ class BirdDetailsGuiLoader(QMainWindow):
             name = l.split(' ')[0]
             link = l.split(' ')[-1]
             audiolinks[name] = link
-        print(audiolinks)
 
         return audiolinks[nam]
 
@@ -146,7 +145,7 @@ class BirdDetailsGuiLoader(QMainWindow):
         self.Description.setText(birdDetails)
 
     def openWiki(self, birdId):
-        links = open(r'Resource/onlyWikiLinks.txt').read().splitlines()
+        links = open(r'text_files/onlyWikiLinks.txt').read().splitlines()
         webbrowser.open(links[birdId - 1])
 
     def moveWindow(self, event):
