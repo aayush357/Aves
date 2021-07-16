@@ -1,0 +1,6 @@
+[submodule "birds-database-new"]
+	path = birds-database-new
+	url = https://git.heroku.com/birds-database-new.git
+[submodule "bird-classifier"]
+	path = bird-classifier101
+	url = https://git.heroku.com/bird-classifier101.git
