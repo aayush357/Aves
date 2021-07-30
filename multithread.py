@@ -1,23 +1,25 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 import sys
-from PyQt5.QtCore import Qt,QObject,QThread,pyqtSignal, pyqtSlot
+from PyQt5.QtCore import Qt, QObject, QThread, pyqtSignal, pyqtSlot
 from PyQt5.uic import loadUi
-import requests,urllib
+import requests, urllib
 import json
 from BirdDetailsGuiLoad import BirdDetailsGuiLoader
 from list_making import *
 from random import sample
 from explore_win import *
-global_State=0
+
+global_State = 0
 
 
-class Worker1(QObject):
-    finished=pyqtSignal(dict, dict)
-    @pyqtSlot(str)
-    def run(self, name):
-        img_dict={}
-        print('worker1 running')
+class Worker(QObject):
+    finished = pyqtSignal(QPixmap, dict, int)
+
+    @pyqtSlot(str, int)
+    def run(self, name, num):
+        img_dict = {}
+        print('worker{} running'.format(num))
         apiurl = 'https://aves-detail.herokuapp.com/getDetails/'
         response = requests.get(apiurl + name)
         data = json.loads(response.text)
@@ -32,130 +34,16 @@ class Worker1(QObject):
         pixmapImage = pixmapImage.scaled(height, width, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
         img_dict[0] = pixmapImage
         print('generating images')
-        self.finished.emit(img_dict, data)
-
-class Worker2(QObject):
-    finished=pyqtSignal(dict, dict)
-
-    @pyqtSlot(str)
-    def run(self, name):
-        img_dict={}
-        print('worker2 running')
-        apiurl = 'https://aves-detail.herokuapp.com/getDetails/'
-        response = requests.get(apiurl + name)
-        data = json.loads(response.text)
-        imageurl = data['birdImageUrl']
-        imageurl = (imageurl.split("/220")[0]).replace("/thumb", "")
-        img = urllib.request.urlopen(imageurl).read()
-        pixmapImage = QPixmap()
-        pixmapImage.loadFromData(img)
-        aspectRatio = pixmapImage.width() / pixmapImage.height()
-        height = min(pixmapImage.height(), 163)
-        width = round(height * aspectRatio)
-        pixmapImage = pixmapImage.scaled(height, width, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
-        img_dict[0] = pixmapImage
-        self.finished.emit(img_dict, data)
-
-class Worker3(QObject):
-    finished=pyqtSignal(dict, dict)
-
-    @pyqtSlot(str)
-    def run(self, name):
-        img_dict={}
-        print('worker3 running')
-        apiurl = 'https://aves-detail.herokuapp.com/getDetails/'
-        response = requests.get(apiurl + name)
-        data = json.loads(response.text)
-        imageurl = data['birdImageUrl']
-        imageurl = (imageurl.split("/220")[0]).replace("/thumb", "")
-        img = urllib.request.urlopen(imageurl).read()
-        pixmapImage = QPixmap()
-        pixmapImage.loadFromData(img)
-        aspectRatio = pixmapImage.width() / pixmapImage.height()
-        height = min(pixmapImage.height(), 163)
-        width = round(height * aspectRatio)
-        pixmapImage = pixmapImage.scaled(height, width, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
-        img_dict[0] = pixmapImage
-
-        self.finished.emit(img_dict, data)
-
-class Worker4(QObject):
-    finished=pyqtSignal(dict, dict)
-
-    @pyqtSlot(str)
-    def run(self, name):
-        img_dict={}
-        print('worker4 running')
-        apiurl = 'https://aves-detail.herokuapp.com/getDetails/'
-        response = requests.get(apiurl + name)
-        data = json.loads(response.text)
-        imageurl = data['birdImageUrl']
-        imageurl = (imageurl.split("/220")[0]).replace("/thumb", "")
-        img = urllib.request.urlopen(imageurl).read()
-        pixmapImage = QPixmap()
-        pixmapImage.loadFromData(img)
-        aspectRatio = pixmapImage.width() / pixmapImage.height()
-        height = min(pixmapImage.height(), 163)
-        width = round(height * aspectRatio)
-        pixmapImage = pixmapImage.scaled(height, width, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
-        img_dict[0] = pixmapImage
-
-        self.finished.emit(img_dict, data)
-
-class Worker5(QObject):
-    finished=pyqtSignal(dict, dict)
-
-    @pyqtSlot(str)
-    def run(self, name):
-        img_dict={}
-        print('worker5 running')
-        apiurl = 'https://aves-detail.herokuapp.com/getDetails/'
-        response = requests.get(apiurl + name)
-        data = json.loads(response.text)
-        imageurl = data['birdImageUrl']
-        imageurl = (imageurl.split("/220")[0]).replace("/thumb", "")
-        img = urllib.request.urlopen(imageurl).read()
-        pixmapImage = QPixmap()
-        pixmapImage.loadFromData(img)
-        aspectRatio = pixmapImage.width() / pixmapImage.height()
-        height = min(pixmapImage.height(), 163)
-        width = round(height * aspectRatio)
-        pixmapImage = pixmapImage.scaled(height, width, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
-        img_dict[0] = pixmapImage
-
-        self.finished.emit(img_dict, data)
-
-class Worker6(QObject):
-    finished=pyqtSignal(dict, dict)
-
-    @pyqtSlot(str)
-    def run(self, name):
-        img_dict={}
-        print('worker6 running')
-        apiurl = 'https://aves-detail.herokuapp.com/getDetails/'
-        response = requests.get(apiurl + name)
-        data = json.loads(response.text)
-        imageurl = data['birdImageUrl']
-        imageurl = (imageurl.split("/220")[0]).replace("/thumb", "")
-        img = urllib.request.urlopen(imageurl).read()
-        pixmapImage = QPixmap()
-        pixmapImage.loadFromData(img)
-        aspectRatio = pixmapImage.width() / pixmapImage.height()
-        height = min(pixmapImage.height(), 163)
-        width = round(height * aspectRatio)
-        pixmapImage = pixmapImage.scaled(height, width, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation)
-        img_dict[0] = pixmapImage
-
-        self.finished.emit(img_dict, data)
+        self.finished.emit(img_dict[0], data, num)
 
 
 class MainScreen(QMainWindow):
-    img_request1 = pyqtSignal(str)
-    img_request2 = pyqtSignal(str)
-    img_request3 = pyqtSignal(str)
-    img_request4 = pyqtSignal(str)
-    img_request5 = pyqtSignal(str)
-    img_request6 = pyqtSignal(str)
+    img_request1 = pyqtSignal(str, int)
+    img_request2 = pyqtSignal(str, int)
+    img_request3 = pyqtSignal(str, int)
+    img_request4 = pyqtSignal(str, int)
+    img_request5 = pyqtSignal(str, int)
+    img_request6 = pyqtSignal(str, int)
 
     def __init__(self):
         super().__init__()
@@ -168,63 +56,52 @@ class MainScreen(QMainWindow):
         self.minimizeButton.clicked.connect(lambda: self.showMinimized())
         self.titleBarFrame.mouseMoveEvent = self.moveWindow
         # self.maximizeButton.clicked.connect(lambda: self.showMaximized())
-        self.Expl = Explore()
         self.SelectImageButton.clicked.connect(self.selectImage)
         self.explore_btn.clicked.connect(self.explore)
 
-        self.names = []
-        self.names_without = []
-        randomlist = sample(range(1, 200), 6)
-        all_names = list_birds()
-        for i in randomlist:
-            name = (all_names[i])[4:]
-            self.names.append(name)
-            self.names_without.append(name.replace('_', ' '))
-
-        print(self.names)
-        self.worker1=Worker1()
-        self.worker1_thread=QThread()
+        self.worker1 = Worker()
+        self.worker1_thread = QThread()
         self.worker1.moveToThread(self.worker1_thread)
         self.worker1_thread.start()
         self.img_request1.connect(self.worker1.run)
-        self.worker1.finished.connect(self.img1_Set)
+        self.worker1.finished.connect(self.set_Img)
 
-        self.worker2 = Worker2()
+        self.worker2 = Worker()
         self.worker2_thread = QThread()
         self.worker2.moveToThread(self.worker2_thread)
         self.worker2_thread.start()
         self.img_request2.connect(self.worker2.run)
-        self.worker2.finished.connect(self.img2_Set)
+        self.worker2.finished.connect(self.set_Img)
 
-        self.worker3 = Worker3()
+        self.worker3 = Worker()
         self.worker3_thread = QThread()
         self.worker3.moveToThread(self.worker3_thread)
         self.worker3_thread.start()
-        self.worker3.finished.connect(self.img3_Set)
+        self.worker3.finished.connect(self.set_Img)
         self.img_request3.connect(self.worker3.run)
 
-        self.worker4 = Worker4()
+        self.worker4 = Worker()
         self.worker4_thread = QThread()
         self.worker4.moveToThread(self.worker4_thread)
         self.worker4_thread.start()
-        self.worker4.finished.connect(self.img4_Set)
+        self.worker4.finished.connect(self.set_Img)
         self.img_request4.connect(self.worker4.run)
 
-        self.worker5 = Worker5()
+        self.worker5 = Worker()
         self.worker5_thread = QThread()
         self.worker5.moveToThread(self.worker5_thread)
         self.worker5_thread.start()
-        self.worker5.finished.connect(self.img5_Set)
+        self.worker5.finished.connect(self.set_Img)
         self.img_request5.connect(self.worker5.run)
 
-        self.worker6 = Worker6()
+        self.worker6 = Worker()
         self.worker6_thread = QThread()
         self.worker6.moveToThread(self.worker6_thread)
         self.worker6_thread.start()
-        self.worker6.finished.connect(self.img6_Set)
+        self.worker6.finished.connect(self.set_Img)
         self.img_request6.connect(self.worker6.run)
 
-        self.run_long_task()
+        # self.run_long_task()
 
         self.fname = ""
         self.bname = ""
@@ -239,35 +116,47 @@ class MainScreen(QMainWindow):
 
         self.ResultFrame.hide()
 
+    def randomBirds(self):
+        self.names = []
+        self.names_without = []
+        randomlist = sample(range(1, 200), 6)
+        all_names = list_birds()
+        for i in randomlist:
+            name = (all_names[i])[4:]
+            self.names.append(name)
+            self.names_without.append(name.replace('_', ' '))
+
     def maximize_restore(self):
         global global_State
-        status=global_State
+        status = global_State
 
-        if status==0:
+        if status == 0:
             self.showMaximized()
-            global_State=1
+            global_State = 1
             self.maximizeButton.setToolTip('Restore')
 
         else:
-            global_State=0
+            global_State = 0
             self.showNormal()
-            self.resize(self.width()+1, self.height()+1)
+            self.resize(self.width() + 1, self.height() + 1)
             self.maximizeButton.setToolTip('Maximize')
-
 
     def loadImage(self, fname):
         pixmapImage = QPixmap(fname)
         aspectRatio = pixmapImage.width() / pixmapImage.height()
         height = min(pixmapImage.height(), 250)
         width = round(height * aspectRatio)
-        print(height, width)
-        self.BirdImage.setPixmap(pixmapImage.scaled(height, width, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation))
+        self.BirdImage.setPixmap(
+            pixmapImage.scaled(height, width, QtCore.Qt.KeepAspectRatio, QtCore.Qt.FastTransformation))
 
     def explore(self):
+        self.randomBirds()
+        self.run_long_task()
         self.Expl.show()
 
     def predictClass(self, fname):
-        res = requests.post("https://bird-species-class-prediction.herokuapp.com/predict",files={'file': open(fname, 'rb')})
+        res = requests.post("https://bird-species-class-prediction.herokuapp.com/predict",
+                            files={'file': open(fname, 'rb')})
         resJson = json.loads(res.text)
         birdName = resJson['birdName']
         birdName = birdName.replace("_", " ")
@@ -276,6 +165,7 @@ class MainScreen(QMainWindow):
         return str(resJson['birdName'])
 
     def run_long_task(self):
+        self.Expl = Explore()
         self.Expl.name1.setEnabled(False)
         self.Expl.name2.setEnabled(False)
         self.Expl.name3.setEnabled(False)
@@ -283,48 +173,24 @@ class MainScreen(QMainWindow):
         self.Expl.name5.setEnabled(False)
         self.Expl.name6.setEnabled(False)
 
-        self.img_request1.emit(self.names[0])
-        self.img_request2.emit(self.names[1])
-        self.img_request3.emit(self.names[2])
-        self.img_request4.emit(self.names[3])
-        self.img_request5.emit(self.names[4])
-        self.img_request6.emit(self.names[5])
+        print(self.names[0])
+        self.img_request1.emit(self.names[0], 1)
+        self.img_request2.emit(self.names[1], 2)
+        self.img_request3.emit(self.names[2], 3)
+        self.img_request4.emit(self.names[3], 4)
+        self.img_request5.emit(self.names[4], 5)
+        self.img_request6.emit(self.names[5], 6)
 
-    def img1_Set( self, img1, api_data):
-        self.Expl.image1.setPixmap(img1[0])
-        self.Expl.lname1.setText(self.names_without[0])
-        self.Expl.name1.setEnabled(True)
-        self.Expl.name1.clicked.connect(lambda :self.load_details_exp(api_data))
-
-    def img2_Set(self, img2, api_data):
-        self.Expl.image2.setPixmap(img2[0])
-        self.Expl.lname2.setText(self.names_without[1])
-        self.Expl.name2.setEnabled(True)
-        self.Expl.name2.clicked.connect(lambda: self.load_details_exp(api_data))
-
-    def img3_Set(self, img3, api_Data):
-        self.Expl.image3.setPixmap(img3[0])
-        self.Expl.lname3.setText(self.names_without[2])
-        self.Expl.name3.setEnabled(True)
-        self.Expl.name3.clicked.connect(lambda: self.load_details_exp(api_Data))
-
-    def img4_Set(self, img4, api_data):
-        self.Expl.image4.setPixmap(img4[0])
-        self.Expl.lname4.setText(self.names_without[3])
-        self.Expl.name4.setEnabled(True)
-        self.Expl.name4.clicked.connect(lambda: self.load_details_exp(api_data))
-
-    def img5_Set(self, img5, api_data):
-        self.Expl.image5.setPixmap(img5[0])
-        self.Expl.lname5.setText(self.names_without[4])
-        self.Expl.name5.setEnabled(True)
-        self.Expl.name5.clicked.connect(lambda: self.load_details_exp(api_data))
-
-    def img6_Set(self, img6, api_data):
-        self.Expl.image6.setPixmap(img6[0])
-        self.Expl.lname6.setText(self.names_without[5])
-        self.Expl.name6.setEnabled(True)
-        self.Expl.name6.clicked.connect(lambda: self.load_details_exp(api_data))
+    def set_Img(self, img, api_data, n):
+        print('num', n)
+        image = getattr(self.Expl, 'image{}'.format(n))
+        lname = getattr(self.Expl, 'lname{}'.format(n))
+        name = getattr(self.Expl, 'name{}'.format(n))
+        image.setPixmap(img)
+        print(2)
+        lname.setText(self.names_without[n - 1])
+        name.setEnabled(True)
+        name.clicked.connect(lambda: self.load_details_exp(api_data))
 
     def selectImage(self):
         self.SelectImageButton.setText("Loading")
@@ -335,7 +201,7 @@ class MainScreen(QMainWindow):
         filepath = QFileDialog.getOpenFileName(
             self, 'Open file', 'c:\\', "Image files (*.jpg *.gif *.jpeg)")
         self.fname = filepath[0]
-        if(self.fname != ''):
+        if (self.fname != ''):
             self.loadImage(self.fname)
             self.predictClass(self.fname)
             self.loadDetails()
@@ -357,13 +223,13 @@ class MainScreen(QMainWindow):
         data = json.loads(response.text)
         self.birdDetailsGuiLoader = BirdDetailsGuiLoader(data)
 
-    def load_details_exp(self,apiData):
+    def load_details_exp(self, apiData):
         print(apiData['birdName'])
-        self.det=BirdDetailsGuiLoader(apiData)
+        self.det = BirdDetailsGuiLoader(apiData)
         self.det.show()
 
     def showDetails(self):
-        if(self.bname != ''):
+        if (self.bname != ''):
             self.birdDetailsGuiLoader.show()
 
     def moveWindow(self, event):
