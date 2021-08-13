@@ -11,10 +11,13 @@ Some of the Screen Shots from the our Applicaion are provided:
 
 Main Screen:
 
-![alt text](https://github.com/aayush357/Aves/blob/master/PNG_files/MainWindow%2018-07-2021%2018_10_17.png)
-
+<!-- ![alt text](https://github.com/aayush357/Aves/blob/master/PNG_files/MainWindow%2018-07-2021%2018_10_17.png | width=100)
+ -->
+ 
+<img src="https://github.com/aayush357/Aves/blob/master/PNG_files/MainWindow%2018-07-2021%2018_10_17.png" width="550" height="550">
 Main Screen After Prediction:
-![alt text](https://github.com/aayush357/Aves/blob/master/PNG_files/MainWindow%2018-07-2021%2018_12_52.png)
+<!-- ![alt text](https://github.com/aayush357/Aves/blob/master/PNG_files/MainWindow%2018-07-2021%2018_12_52.png) -->
+<img src="https://github.com/aayush357/Aves/blob/master/PNG_files/MainWindow%2018-07-2021%2018_12_52.png" width="550" height="550">
 
 Details Screen:
 ![alt text](https://github.com/aayush357/Aves/blob/master/PNG_files/MainWindow%2018-07-2021%2018_13_01.png)
