@@ -9,3 +9,12 @@ The output from this Classifier API is used for fetching the details of the bird
 
 Some of the Screen Shots from the our Applicaion are provided:
 
+Main Screen:
+
+![alt text](https://github.com/aayush357/Aves/blob/master/PNG_files/MainWindow%2018-07-2021%2018_10_17.png)
+
+Main Screen After Prediction:
+![alt text](https://github.com/aayush357/Aves/blob/master/PNG_files/MainWindow%2018-07-2021%2018_12_52.png)
+
+Details Screen:
+![alt text](https://github.com/aayush357/Aves/blob/master/PNG_files/MainWindow%2018-07-2021%2018_13_01.png)
